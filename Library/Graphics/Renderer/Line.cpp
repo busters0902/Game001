@@ -6,36 +6,36 @@
 
 namespace KMT {
 
-	CLineSP CLine::Create(const CVector3& _posA, const CVector3& _posB, DWORD _color)
+	LineSP Line::Create(const CVector3& positionA, const CVector3& positionB, DWORD color)
 	{
 		// 生成する
-		CLine* pobj = new CLine();
+		Line* object = new Line();
 
 		// 頂点データの作成
-		pobj->Vertices[0].x = _posA.x;
-		pobj->Vertices[0].y = _posA.y;
-		pobj->Vertices[0].z = _posA.z;
-		pobj->Vertices[0].color = _color;
+		object->_vertices[0]._x = positionA.x;
+		object->_vertices[0]._y = positionA.y;
+		object->_vertices[0]._z = positionA.z;
+		object->_vertices[0]._color = color;
 
-		pobj->Vertices[1].x = _posB.x;
-		pobj->Vertices[1].y = _posB.y;
-		pobj->Vertices[1].z = _posB.z;
-		pobj->Vertices[1].color = _color;
+		object->_vertices[1]._x = positionB.x;
+		object->_vertices[1]._y = positionB.y;
+		object->_vertices[1]._z = positionB.z;
+		object->_vertices[1]._color = color;
 
-		return CLineSP(pobj);
+		return LineSP(object);
 	}
 
-	void CLine::Render(const CCamera* _camera)
+	void Line::Render(const CCamera* _camera)
 	{
 		HRESULT hr;
 
 		// カメラ設定
-		CGraphicsManager::pd3dDevice->SetTransform(D3DTS_VIEW, &_camera->getMatrix(CViewBehavior::VIEW));
-		CGraphicsManager::pd3dDevice->SetTransform(D3DTS_PROJECTION, &_camera->getMatrix(CViewBehavior::PROJECTION));
+		GraphicsManager::_device->SetTransform(D3DTS_VIEW, &_camera->getMatrix(CViewBehavior::VIEW));
+		GraphicsManager::_device->SetTransform(D3DTS_PROJECTION, &_camera->getMatrix(CViewBehavior::PROJECTION));
 
 		// ラインの描画
 		{
-			CGraphicsManager::pd3dDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
+			GraphicsManager::_device->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);
 
 			// ワールドマトリクス設定
 			D3DXMATRIX SclMtx, RotMtx, PosMtx, WldMtx ;
@@ -52,23 +52,23 @@ namespace KMT {
 			//GraphicsManager::m_pd3dDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA ) ;
 
 			// テクスチャは使わない
-			CGraphicsManager::pd3dDevice->SetTexture(0, NULL);
+			GraphicsManager::_device->SetTexture(0, NULL);
 
 			//ライティングOFF
-			CGraphicsManager::pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-			CGraphicsManager::pd3dDevice->LightEnable(0, FALSE);
-			CGraphicsManager::pd3dDevice->SetTransform(D3DTS_WORLD, &WldMtx);
+			GraphicsManager::_device->SetRenderState(D3DRS_LIGHTING, FALSE);
+			GraphicsManager::_device->LightEnable(0, FALSE);
+			GraphicsManager::_device->SetTransform(D3DTS_WORLD, &WldMtx);
 
 			// Render the scene
-			if(SUCCEEDED(CGraphicsManager::pd3dDevice->BeginScene()))
+			if(SUCCEEDED(GraphicsManager::_device->BeginScene()))
 			{
-				CGraphicsManager::pd3dDevice->DrawPrimitiveUP(D3DPT_LINESTRIP, 1, Vertices, sizeof(LineVertex));   
-				V(CGraphicsManager::pd3dDevice->EndScene());
+				GraphicsManager::_device->DrawPrimitiveUP(D3DPT_LINESTRIP, 1, _vertices, sizeof(LineVertex));   
+				V(GraphicsManager::_device->EndScene());
 			}
 
-			CGraphicsManager::pd3dDevice->SetFVF(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1);
-			CGraphicsManager::pd3dDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-			CGraphicsManager::pd3dDevice->LightEnable(0, TRUE);
+			GraphicsManager::_device->SetFVF(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1);
+			GraphicsManager::_device->SetRenderState(D3DRS_LIGHTING, TRUE);
+			GraphicsManager::_device->LightEnable(0, TRUE);
 
 		}
 

@@ -6,17 +6,17 @@
 
 namespace KMT {
 
-	CGraphicalRegularPolygonPlane::CGraphicalRegularPolygonPlane() : TextureSize(1.0f, 1.0f, 0.0f)
+	GraphicalRegularPolygonPlane::GraphicalRegularPolygonPlane() : _textureSize(1.0f, 1.0f, 0.0f)
 	{}
 
-	//CGRendererSP CGraphicalRegularPolygonPlane::Create(const int &_radius, const int &_facenum, 
+	//CGRendererSP GraphicalRegularPolygonPlane::Create(const int &_radius, const int &_facenum, 
 	//	const FACE_GENERATE_TYPE &_type, const CTextureSP &_texture) 
 	//{
-	//	CGraphicalRegularPolygonPlane *_obj;
+	//	GraphicalRegularPolygonPlane *_obj;
 	//	return CGRendererSP(_obj);
 	//}
 
-	//bool CGraphicalRegularPolygonPlane::GenerateRegularPolygonBoard(const int &_radius, const int &_facenum, 
+	//bool GraphicalRegularPolygonPlane::GenerateRegularPolygonBoard(const int &_radius, const int &_facenum, 
 	//	const FACE_GENERATE_TYPE &_type, const CTextureSP &_texture) 
 	//{
 	//	// キーネーム設定
@@ -46,7 +46,7 @@ namespace KMT {
 	//	// メッシュ情報読み込み
 	//	LPD3DXMESH _mesh;
 	//	// 頂点数は面数+中心頂点でできる
-	//	//if (FAILED(D3DXCreateMeshFVF(_facenum, (_type == )(_facenum+1), D3DXMESH_MANAGED, CVertex::FVF, CGraphicsManager::pd3dDevice, &_mesh)))
+	//	//if (FAILED(D3DXCreateMeshFVF(_facenum, (_type == )(_facenum+1), D3DXMESH_MANAGED, CVertex::FVF, GraphicsManager::_device, &_mesh)))
 	//	//{
 	//	//	return false;
 	//	//}
